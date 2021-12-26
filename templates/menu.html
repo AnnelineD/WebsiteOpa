@@ -1,0 +1,286 @@
+<style>
+    :root{
+        --header-font: monospace;
+        --text-color: rgb(30,32,37);
+    }
+
+    nav {
+        z-index: -100;
+        font-family: var(--header-font);
+        display: contents;  /*ignore this div such that the ul with the menu items has a height*/
+    }
+
+    a, button {
+        text-decoration: none;
+        color: var(--text-color);
+        transition: color 0.3s ease;
+        font-family: var(--header-font);
+    }
+
+    a:hover, button:hover, .dropbtn:focus{
+        color: darkgray;
+    }
+
+    #menu{
+        overflow-y: scroll;
+        height: calc(100vh - (50px + 70px));
+    }
+
+
+    #menuToggle {
+        display: block;
+        position: fixed;
+        float: left;
+        top: 50px;
+        left: 50px;
+
+        z-index: 10;
+
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    #menuToggle input {
+        display: block;
+        width: 40px;
+        height: 32px;
+        position: absolute;
+        top: -7px;
+        left: -5px;
+
+        cursor: pointer;
+
+        opacity: 0; /* hide this */
+        z-index: 2; /* and place it over the hamburger */
+
+        -webkit-touch-callout: none;
+    }
+
+    /*
+     * Just a quick hamburger
+     */
+    #menuToggle span {
+        display: block;
+        width: 33px;
+        height: 4px;
+        margin-bottom: 5px;
+        position: relative;
+
+        background: hsla(49, 57%, 5%, 0.5);
+        border-radius: 3px;
+
+        z-index: 1;
+
+        transform-origin: center;
+
+        transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
+        background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
+        opacity 0.55s ease;
+    }
+
+
+    /*
+     * Transform all the slices of hamburger
+     * into a crossmark.
+     */
+    #menuToggle input:checked {
+        transform: translate(280px, 0px);
+    }
+
+    #menuToggle input:checked ~ span {
+        opacity: 1;
+        transform: translate(280px, 9px) rotate(-45deg) ;
+        background: #232323;
+    }
+
+    /*
+     * But let's hide the middle one.
+     */
+    #menuToggle input:checked ~ span:nth-last-child(3) {
+        opacity: 0;
+        transform: translate(280px, 0px) rotate(0deg) scale(0.2, 0.2);
+    }
+
+    /*
+     * Ohyeah and the last one should go the other direction
+     */
+    #menuToggle input:checked ~ span:nth-last-child(2) {
+        opacity: 1;
+        transform: translate(280px, -9px) rotate(45deg) ;
+    }
+
+    /*
+ * Make this absolute positioned
+ * at the top left of the screen
+ */
+    #menu
+    {
+        position: absolute;
+        width: 300px;
+        margin: -80px 0 0 -50px;
+        padding: 50px;
+        padding-top: 70px;
+
+        background: #ededed;
+        list-style-type: none;
+        -webkit-font-smoothing: antialiased;
+        /* to stop flickering of text in safari */
+
+        transform-origin: 0% 0%;
+        transform: translate(-100%, 0);
+
+        transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+    }
+
+    #menu li
+    {
+        padding: 10px 0;
+        font-size: 22px;
+    }
+
+    /*
+     * And let's slide it in from the left
+     */
+    #menuToggle input:checked ~ ul
+    {
+        transform: none;
+    }
+
+    /*
+    .current:before { /* although it says never used, it is
+        content: ' \25BA';
+        width: var(--space-xs);
+        margin-left: calc(var(--space-xs) * (-1));
+        margin-right: 0;
+    }
+    */
+
+
+    .current {
+        font-weight: bold;
+    }
+    #dropdown-content {
+        display: none;
+    }
+
+    .dropbtn {
+        border: none;
+        cursor: pointer;
+        background-color: transparent;
+        text-decoration: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    button:focus {
+        outline:0;
+        color: tomato;
+    }
+
+
+    nav ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+
+    /* Track */
+    nav ::-webkit-scrollbar-track {
+        box-shadow: none;
+        /*border-radius: 10px;*/
+        background-color: rgb(237 237 237);
+    }
+
+    /* Handle */
+    nav ::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:vertical {
+        height: 10px;
+    }
+
+    /* Handle on hover */
+    nav ::-webkit-scrollbar-thumb:hover {
+        background: var(--text-color);
+    }
+</style>
+
+<nav role="navigation">
+    <div id="menuToggle" class="test">
+        <!--
+        A fake / hidden checkbox is used as click reciever,
+        so you can use the :checked selector on it.
+        -->
+        <input type="checkbox" id="togglable"/>
+
+        <!--
+        Some spans to act as a hamburger.
+
+        They are acting like a real hamburger,
+        not that McDonalds stuff.
+        -->
+        <span></span>
+        <span></span>
+        <span></span>
+
+        <!--
+        Too bad the menu has to be inside of the button
+        but hey, it's pure CSS magic.
+        -->
+
+        <ul id="menu">
+            {% for title in titles %}
+                <a href="#{{ title[1] }}">
+                    <li id="{{ "m-" + title[1] }}">{{ title[0] }}</li>
+                </a>
+            {% endfor %}
+        </ul>
+    </div>
+</nav>
+
+<script>
+    document.getElementById("menu").onclick = function (event) {
+        event.stopPropagation()
+    }
+    // dit kan je zien als een method definieeren die wordt aangeroepen als er wordt geklikt
+    window.onclick = function (event) {
+        let menu = document.getElementById('menu'); // heel het menuutje
+        let button = document.getElementById('portfolio');
+        let checkbox = document.getElementById('togglable'); // die togglable slaat op de id van uw checkbox
+
+        // als de click niet op het menu of checkbox is en het menuutje is uitgeklapt
+        if ((event.target !== menu) && (event.target !== checkbox) && (event.target !== button) && checkbox.checked) {
+            // klap het menuutje dicht
+            checkbox.checked = false;
+            console.log(event.target);
+        }
+    }
+
+    window.onscroll = function( ) {
+        let current_section = "";
+
+        let poems = {{ titles }};
+        for (let i = 0; i < poems.length; i++) {
+            if (document.getElementById(poems[i][1]).getBoundingClientRect().top < screen.height / 2) {
+                current_section = poems[i][1]
+            }
+        }
+
+        console.log(current_section)
+
+        for (let i = poems.length - 1; i >= 0; i--) {
+            document.getElementById("m-".concat(poems[i][1])).className = current_section === poems[i][1] ? "current" : "";
+        }
+    }
+
+
+    function dropdown(id){
+        let x = document.getElementById(id);
+        if(x.style.display !== "block"){
+            document.getElementById(id).style.display = "block";
+        } else{
+            document.getElementById(id).style.display = "none";
+        }
+    }
+</script>

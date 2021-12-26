@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>W.J.C. Daggelinckx</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="head">
+    <h1> Will J.C. Daggelinckx </h1>
+    <h2> Gedichten</h2>
+</div>
+
+{% include "menu.html" %}
+
+<div id="poem-container">
+    {% for poem in poems %}
+        <div class="poem" id="{{ poem[1] }}">
+            {% include poem[0] %}
+        </div>
+    {% endfor %}
+</div>
+
+
+</body>
+</html>

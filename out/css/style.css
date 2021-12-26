@@ -1,0 +1,58 @@
+:root {
+    --space-xxs: .25rem;
+    --space-xs:  .5rem;
+    --space-sm:  1rem;
+    --space-md:  1.5rem;
+    --space-lg:  2rem;
+    --space-xl:  3rem;
+    --space-xxl: 6rem;
+
+    color: rgb(30,32,37);
+    background-color: hsl(0, 0%, 98%);
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+body{
+    font-family: monospace;
+    margin: var(--space-xl);
+}
+
+#head{
+    text-align: center;
+}
+
+.poem{
+    border-style: solid;
+    border-width: 0.05em;
+    border-color: rgba(0, 0, 0, 0.2);
+    border-radius: 0.1%;
+
+    padding: var(--space-xl) var(--space-xxl);
+    margin: var(--space-md);
+}
+
+
+.poem h1{
+    padding-top: 0;
+    font-weight: normal;
+    text-transform: uppercase;
+    #text-decoration: underline;
+    text-decoration-style: dashed;
+    font-size: 1.5em;
+
+    margin-left: var(--space-lg);
+}
+
+
+.poem-text{
+    line-height: var(--space-md);
+    margin-top: var(--space-md);
+}
+
+#poem-container{
+    width: 50em;
+    margin: auto;
+}

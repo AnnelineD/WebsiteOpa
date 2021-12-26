@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>W.J.C. Daggelinckx</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="head">
+    <h1> Will J.C. Daggelinckx </h1>
+    <h2> Gedichten</h2>
+</div>
+
+<style>
+    :root{
+        --header-font: monospace;
+        --text-color: rgb(30,32,37);
+    }
+
+    nav {
+        z-index: -100;
+        font-family: var(--header-font);
+        display: contents;  /*ignore this div such that the ul with the menu items has a height*/
+    }
+
+    a, button {
+        text-decoration: none;
+        color: var(--text-color);
+        transition: color 0.3s ease;
+        font-family: var(--header-font);
+    }
+
+    a:hover, button:hover, .dropbtn:focus{
+        color: darkgray;
+    }
+
+    #menu{
+        overflow-y: scroll;
+        height: calc(100vh - (50px + 70px));
+    }
+
+
+    #menuToggle {
+        display: block;
+        position: fixed;
+        float: left;
+        top: 50px;
+        left: 50px;
+
+        z-index: 10;
+
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    #menuToggle input {
+        display: block;
+        width: 40px;
+        height: 32px;
+        position: absolute;
+        top: -7px;
+        left: -5px;
+
+        cursor: pointer;
+
+        opacity: 0; /* hide this */
+        z-index: 2; /* and place it over the hamburger */
+
+        -webkit-touch-callout: none;
+    }
+
+    /*
+     * Just a quick hamburger
+     */
+    #menuToggle span {
+        display: block;
+        width: 33px;
+        height: 4px;
+        margin-bottom: 5px;
+        position: relative;
+
+        background: hsla(49, 57%, 5%, 0.5);
+        border-radius: 3px;
+
+        z-index: 1;
+
+        transform-origin: center;
+
+        transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
+        background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
+        opacity 0.55s ease;
+    }
+
+
+    /*
+     * Transform all the slices of hamburger
+     * into a crossmark.
+     */
+    #menuToggle input:checked {
+        transform: translate(280px, 0px);
+    }
+
+    #menuToggle input:checked ~ span {
+        opacity: 1;
+        transform: translate(280px, 9px) rotate(-45deg) ;
+        background: #232323;
+    }
+
+    /*
+     * But let's hide the middle one.
+     */
+    #menuToggle input:checked ~ span:nth-last-child(3) {
+        opacity: 0;
+        transform: translate(280px, 0px) rotate(0deg) scale(0.2, 0.2);
+    }
+
+    /*
+     * Ohyeah and the last one should go the other direction
+     */
+    #menuToggle input:checked ~ span:nth-last-child(2) {
+        opacity: 1;
+        transform: translate(280px, -9px) rotate(45deg) ;
+    }
+
+    /*
+ * Make this absolute positioned
+ * at the top left of the screen
+ */
+    #menu
+    {
+        position: absolute;
+        width: 300px;
+        margin: -80px 0 0 -50px;
+        padding: 50px;
+        padding-top: 70px;
+
+        background: #ededed;
+        list-style-type: none;
+        -webkit-font-smoothing: antialiased;
+        /* to stop flickering of text in safari */
+
+        transform-origin: 0% 0%;
+        transform: translate(-100%, 0);
+
+        transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+    }
+
+    #menu li
+    {
+        padding: 10px 0;
+        font-size: 22px;
+    }
+
+    /*
+     * And let's slide it in from the left
+     */
+    #menuToggle input:checked ~ ul
+    {
+        transform: none;
+    }
+
+    /*
+    .current:before { /* although it says never used, it is
+        content: ' \25BA';
+        width: var(--space-xs);
+        margin-left: calc(var(--space-xs) * (-1));
+        margin-right: 0;
+    }
+    */
+
+
+    .current {
+        font-weight: bold;
+    }
+    #dropdown-content {
+        display: none;
+    }
+
+    .dropbtn {
+        border: none;
+        cursor: pointer;
+        background-color: transparent;
+        text-decoration: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    button:focus {
+        outline:0;
+        color: tomato;
+    }
+
+
+    nav ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+
+    /* Track */
+    nav ::-webkit-scrollbar-track {
+        box-shadow: none;
+        /*border-radius: 10px;*/
+        background-color: rgb(237 237 237);
+    }
+
+    /* Handle */
+    nav ::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:vertical {
+        height: 10px;
+    }
+
+    /* Handle on hover */
+    nav ::-webkit-scrollbar-thumb:hover {
+        background: var(--text-color);
+    }
+</style>
+
+<nav role="navigation">
+    <div id="menuToggle" class="test">
+        <!--
+        A fake / hidden checkbox is used as click reciever,
+        so you can use the :checked selector on it.
+        -->
+        <input type="checkbox" id="togglable"/>
+
+        <!--
+        Some spans to act as a hamburger.
+
+        They are acting like a real hamburger,
+        not that McDonalds stuff.
+        -->
+        <span></span>
+        <span></span>
+        <span></span>
+
+        <!--
+        Too bad the menu has to be inside of the button
+        but hey, it's pure CSS magic.
+        -->
+
+        <ul id="menu">
+                <a href="#Golgotha">
+                    <li id="m-Golgotha">Golgotha.
+</li>
+                </a>
+                <a href="#eksperiment">
+                    <li id="m-eksperiment">Eksperiment.
+</li>
+                </a>
+                <a href="#Ballade">
+                    <li id="m-Ballade">Ballade.
+</li>
+                </a>
+                <a href="#BevrorenZiel">
+                    <li id="m-BevrorenZiel">Bevroren ziel.
+</li>
+                </a>
+                <a href="#EenNaam?">
+                    <li id="m-EenNaam?">Een naam ?
+</li>
+                </a>
+                <a href="#Waarheid">
+                    <li id="m-Waarheid">Waarheid.
+</li>
+                </a>
+                <a href="#Finale">
+                    <li id="m-Finale">Finale.
+</li>
+                </a>
+                <a href="#EenVraagVanEenArmeKleineJongen">
+                    <li id="m-EenVraagVanEenArmeKleineJongen">Een vraag van een arme kleine jongen.
+</li>
+                </a>
+                <a href="#Interludium">
+                    <li id="m-Interludium">Interludium.
+</li>
+                </a>
+                <a href="#VoorbijeEeuwigheid">
+                    <li id="m-VoorbijeEeuwigheid">Voorbije eeuwigheid.
+</li>
+                </a>
+                <a href="#EenMensenleven">
+                    <li id="m-EenMensenleven">Een mensenleven.
+</li>
+                </a>
+                <a href="#Betrachting">
+                    <li id="m-Betrachting">Betrachting.
+</li>
+                </a>
+                <a href="#Alice">
+                    <li id="m-Alice">Alice
+</li>
+                </a>
+                <a href="#Piano">
+                    <li id="m-Piano">Piano.
+</li>
+                </a>
+                <a href="#Kompositie">
+                    <li id="m-Kompositie">Kompositie.
+</li>
+                </a>
+                <a href="#Uit">
+                    <li id="m-Uit">Uit.
+</li>
+                </a>
+                <a href="#Ouverture">
+                    <li id="m-Ouverture">Ouverture.
+</li>
+                </a>
+                <a href="#IkWilWachten">
+                    <li id="m-IkWilWachten">Ik wil wachten...
+</li>
+                </a>
+                <a href="#Beestachtigheden">
+                    <li id="m-Beestachtigheden">Beestachtigheden
+</li>
+                </a>
+                <a href="#Illuzie">
+                    <li id="m-Illuzie">Illuzie.
+</li>
+                </a>
+                <a href="#Eenzaamheid">
+                    <li id="m-Eenzaamheid">Eenzaamheid.
+</li>
+                </a>
+                <a href="#Amor">
+                    <li id="m-Amor">Amor.
+</li>
+                </a>
+                <a href="#Franse les">
+                    <li id="m-Franse les">Franse Les.
+</li>
+                </a>
+                <a href="#Venus">
+                    <li id="m-Venus">Venus
+</li>
+                </a>
+                <a href="#HetEksamen">
+                    <li id="m-HetEksamen">﻿Het eksamen
+</li>
+                </a>
+                <a href="#PetiteFleur">
+                    <li id="m-PetiteFleur">Petite Fleur
+</li>
+                </a>
+                <a href="#Visioen">
+                    <li id="m-Visioen">Visioen.
+</li>
+                </a>
+                <a href="#ComparaisonMacabre">
+                    <li id="m-ComparaisonMacabre">Comparaison Macabre.
+</li>
+                </a>
+                <a href="#Race">
+                    <li id="m-Race">Race.
+</li>
+                </a>
+                <a href="#Verliefdheid">
+                    <li id="m-Verliefdheid">Verliefdheid.
+</li>
+                </a>
+        </ul>
+    </div>
+</nav>
+
+<script>
+    document.getElementById("menu").onclick = function (event) {
+        event.stopPropagation()
+    }
+    // dit kan je zien als een method definieeren die wordt aangeroepen als er wordt geklikt
+    window.onclick = function (event) {
+        let menu = document.getElementById('menu'); // heel het menuutje
+        let button = document.getElementById('portfolio');
+        let checkbox = document.getElementById('togglable'); // die togglable slaat op de id van uw checkbox
+
+        // als de click niet op het menu of checkbox is en het menuutje is uitgeklapt
+        if ((event.target !== menu) && (event.target !== checkbox) && (event.target !== button) && checkbox.checked) {
+            // klap het menuutje dicht
+            checkbox.checked = false;
+            console.log(event.target);
+        }
+    }
+
+    window.onscroll = function( ) {
+        let current_section = "";
+
+        let poems = [['Golgotha.\n', 'Golgotha'], ['Eksperiment.\n', 'eksperiment'], ['Ballade.\n', 'Ballade'], ['Bevroren ziel.\n', 'BevrorenZiel'], ['Een naam ?\n', 'EenNaam?'], ['Waarheid.\n', 'Waarheid'], ['Finale.\n', 'Finale'], ['Een vraag van een arme kleine jongen.\n', 'EenVraagVanEenArmeKleineJongen'], ['Interludium.\n', 'Interludium'], ['Voorbije eeuwigheid.\n', 'VoorbijeEeuwigheid'], ['Een mensenleven.\n', 'EenMensenleven'], ['Betrachting.\n', 'Betrachting'], ['Alice\n', 'Alice'], ['Piano.\n', 'Piano'], ['Kompositie.\n', 'Kompositie'], ['Uit.\n', 'Uit'], ['Ouverture.\n', 'Ouverture'], ['Ik wil wachten...\n', 'IkWilWachten'], ['Beestachtigheden\n', 'Beestachtigheden'], ['Illuzie.\n', 'Illuzie'], ['Eenzaamheid.\n', 'Eenzaamheid'], ['Amor.\n', 'Amor'], ['Franse Les.\n', 'Franse les'], ['Venus\n', 'Venus'], ['\ufeffHet eksamen\n', 'HetEksamen'], ['Petite Fleur\n', 'PetiteFleur'], ['Visioen.\n', 'Visioen'], ['Comparaison Macabre.\n', 'ComparaisonMacabre'], ['Race.\n', 'Race'], ['Verliefdheid.\n', 'Verliefdheid']];
+        for (let i = 0; i < poems.length; i++) {
+            if (document.getElementById(poems[i][1]).getBoundingClientRect().top < screen.height / 2) {
+                current_section = poems[i][1]
+            }
+        }
+
+        console.log(current_section)
+
+        for (let i = poems.length - 1; i >= 0; i--) {
+            document.getElementById("m-".concat(poems[i][1])).className = current_section === poems[i][1] ? "current" : "";
+        }
+    }
+
+
+    function dropdown(id){
+        let x = document.getElementById(id);
+        if(x.style.display !== "block"){
+            document.getElementById(id).style.display = "block";
+        } else{
+            document.getElementById(id).style.display = "none";
+        }
+    }
+</script>
+<div id="poem-container">
+        <div class="poem" id="Golgotha">
+<h1>Golgotha.
+</h1>
+<pre class="poem-text">Belasterd en beladen 
+met spot en gele haat 
+der mensenbroeders -
+mijn ziel wordt stukgeknaagd -
+ga ik. 
+Ik ben geen medelijden waard. 
+Ik ben te dom om 't te begrijpen. 
+Men spuwt en slaat me in 't gezicht. 
+Maar met mijn ene oog -het and're is reeds dicht -
+zie ik, wat zij, die mij nu schoppen en vernêren, 
+in d' eeuwigheid, al leren ze het nog aan zovelen, 
+beslist nooit meer zullen aanschouwen. 
+Wel zal hen nog berouwen, 
+een houten kruis, een doornekroon, 
+een geseling, gespot, gehoon. 
+Ik drink de kelk tot op de bodem leeg want, 
+Ik weet... dat iemand me nu van hierboven gadeslaat,
+dat hij reeds nu weet hoe het seffens gaat, 
+dat de geschiedenis zich steeds herhaalt 
+en dat Gods molen immer verder maalt. 
+Ik weet dat ik niet d' eerste en ook niet de laatste ben. 
+Maar ik weet ook dat ik nu reeds mijn bestemming ken.
+</pre>        </div>
+        <div class="poem" id="eksperiment">
+<h1>Eksperiment.
+</h1>
+<pre class="poem-text">'k zag gister een eksperiment, 
+waarin 'k mezelf weer kon vinden 
+en ik vond me een belachelijke vent. 
+Nochtans - de waarheid kwetst – 
+heb ik getracht mezelf 
+er weer uit te winden. 
+'k ben er niet in gelukt 
+en toen het voorbij en licht was 
+in de zaal waarin ik zat, 
+heeft iets in mij geveend, 
+omdat er in de eksperimentele ondergrond 
+achter de lach iets verborgen was. 
+Dit iets heeft me geroerd en pijn gedaan, 
+'waar 't anderen diende tot vermaak. 
+Een "taste of honey" 
+had voor mij een bittere nasmaak. 
+</pre>        </div>
+        <div class="poem" id="Ballade">
+<h1>Ballade.
+</h1>
+<pre class="poem-text">Een tuin vol bloemen
+en maneschijn
+en perelende dauw
+als diamanten fijn
+en een zacht ruisend windje.
+Als een zilveren lintje
+kabbelt een beek
+door deze streek
+van rust en tevredenheid
+en droom'rige gelukzaligheid.
+Midden in dit paradijsje
+bij 't luisteren naar een wijsje
+van een nachtegaal,
+zitten wij daar helemaal
+alleen onder een sterrenpracht
+in deze fonkelende nacht.
+</pre>        </div>
+        <div class="poem" id="BevrorenZiel">
+<h1>Bevroren ziel.
+</h1>
+<pre class="poem-text">Elke kus
+parels in m1Jn ziel bewaard, zijn droppels ijs, 
+bevroren. 
+o, kon één enk’le zonnestraal, uit Uw glimlach geboren, 
+ontdooien, smelten 
+deze harde 
+diamanten 
+van kristallijnen ijskristal 
+tot klaterende waterval, 
+die m'n ziel omspoelt 
+aan alle kanten.
+</pre>        </div>
+        <div class="poem" id="EenNaam?">
+<h1>Een naam ?
+</h1>
+<pre class="poem-text">Uit een glimlach ben ik geboren
+en uit een zachte blik;
+Ik bind mannen aan hun vrouwen
+en moeders aan hun kind.
+Een jongen en een meisje 
+breng ik tot elkaar 
+met een zachte teerheid, 
+die spreekt uit elk gebaar.
+
+Maar als ik sterf
+-en dit gebeurt zeer veel-
+dan breek ik menig hart;
+dan maak ik plaats 
+voor droefheid en voor smart.
+Ik hoop dat ik je nog nooit ontgriefde,
+maar als 'k voor jou reeds eenmaal ben gestorven, 
+Hoop ik te worden weergeboren
+-je kreeg mijn naam nog niet te horen?-
+Het is een heel eenvoudige naam,
+’t is “Liefde”.
+</pre>        </div>
+        <div class="poem" id="Waarheid">
+<h1>Waarheid.
+</h1>
+<pre class="poem-text">Je kan nu trots zijn op jezelf!
+Je hebt je eigen wereld stukgemaakt.
+Je heb jezelf weer eens willen tonen
+dat je een "Man",
+een "Held", Don juan of Hercules waart,
+die jonge maagden beschermt
+of zich over zwakkeren ontfermt.
+Je hebt je uit je eigen losgeschud
+en hebt meteen getracht je leugens
+te ontvluchten.
+Nu je de werkelijheid aanschouwt,
+Nu heb je spijt en rouwt.
+Kruip terug in jezelf en wees
+voor jezelf geen God.
+Dan ontvlucht je in werkelijheid
+een belachelijke Don Quichote.
+</pre>        </div>
+        <div class="poem" id="Finale">
+<h1>Finale.
+</h1>
+<pre class="poem-text">Met lome pas ben ik huiswaarts gekeerd 
+anadat je me afscheid wilde kussen 
+- maar j'hebt het niet gedaan – 
+je wilde enkel maar. 
+Of, wou ik het soms? 
+Maar je hebt me weerstaan. 
+Ik weet 't valt zwaar 
+maar 'k 'wil de liefde rein bewaren, 
+die ons verbindt. 
+Eens toch zal je mij kussen, 
+weet ik, 
+Het zal geen einde zijn 
+Maar een begin.
+</pre>        </div>
+        <div class="poem" id="EenVraagVanEenArmeKleineJongen">
+<h1>Een vraag van een arme kleine jongen.
+</h1>
+<pre class="poem-text">Waarom ben ik, het, die op school wordt nagewezen?
+Is het omdat mijn vader stal?
+Waarom worden die "Rijke Heren" zo geprezen,
+dit 't volk bestelen, dat hen nu bestal?
+Waarom kon ma geen brood meer kopen?
+Waarom moest vader stelen gaan?
+Is het omdat we niet konden betalen,
+dat Pa de gevangenis in moet gaan?
+Waarom is arm zijn een schande,
+als men wil werken voor zijn brood?
+En waarom pochen rijke luiaards,
+en houden ze zich groot?
+Zij moesten 't zijn die werden nagewezen,
+die ongestraft hun gangen gaan,
+en zich met geld en rijkdom hun straf afkopen,
+als ze iets hebben misdaan.
+
+Is arm of rijk niet enkel schijn?
+Of is 't toch zo,
+dat men in deze wereld niet eerlijk en oprecht
+moet zijn?
+
+En als mijn vaders stal, dan was 't niet om te stelen.
+Hij zou nog eerder zijn armste bezit verdelen.
+Maar als men niets heeft,
+dan kan men niets weggeven.
+Dan is men arm, dan heeft men honger,
+dan moet men maar tot groot vermaak der "Heren",
+in armoede en ellende kreperen.
+
+Doch eenmaal dood is er geen onderscheid.
+Dan is arm en rijk voor immer gelijk.
+D'armen zullen de rijken wel vergeven !!!
+</pre>        </div>
+        <div class="poem" id="Interludium">
+<h1>Interludium.
+</h1>
+<pre class="poem-text">Een meisje staat
+    op straat en wacht.
+Twee jongens wachten
+op straat met een meisje.
+
+Een jongen staat
+    op straat en wacht
+met een meisje.
+
+Eén jongen wacht
+    op de tram.
+Ze wachten.
+    Wachten ze af ?
+
+</pre>        </div>
+        <div class="poem" id="VoorbijeEeuwigheid">
+<h1>Voorbije eeuwigheid.
+</h1>
+<pre class="poem-text">Eens heb ik je lief gehad
+maar dat is lang geleden.
+Wellicht wel voor een dag of wat,
+Misschien ook langer,
+Misschien maar even.
+Maar weken, maanden gaan voorbij,
+Groeien uit tot jaren.
+En een storm. hoe hevig ook,
+Komt ééns tot bedaren.
+Liefde die wanhopig is 
+en tevens onbeantwoord,
+Wordt vergeten, gaat teloor
+Vriendschap blijft...
+Wordt nooit vergeten.
+
+</pre>        </div>
+        <div class="poem" id="EenMensenleven">
+<h1>Een mensenleven.
+</h1>
+<pre class="poem-text">Knip, een schaar,
+      een stuk van 't leven
+Knip, 
+      weerom een snipper bij
+Op d’oceaan van mensen. 
+Knip,  een schaar, 
+       een draad,
+       een stuk versneden,
+weggeworpen maar. 
+Knip snippers schaar! 
+Knip manden vol
+     snippers.
+Knip.
+      Een schaar knipt
+snippers, stoffen,
+	                draden.
+Knip 
+	schaar.
+Een schaar knipt stukken 
+	van het leven.
+Een snipper schaar!</pre>        </div>
+        <div class="poem" id="Betrachting">
+<h1>Betrachting.
+</h1>
+<pre class="poem-text">En als ik sterf 
+zal niet mijn ziel dees aard' verlaten, 
+maar vastgekluisterd aan de jouwe 
+leven! 
+Ik wil niet sterven! 
+Kon ik je maar bepraten! 
+Een helpende hand van jou 
+zou me weer alles 
+geven; 
+Een toenadering 
+van hand, of mond, of wezen, 
+ware voor mij 
+een regenboog 
+van een herboren leven.
+
+</pre>        </div>
+        <div class="poem" id="Alice">
+<h1>Alice
+</h1>
+<pre class="poem-text">Als de flonk'rende sterren
+der nacht
+zijn je ogen.
+
+Als de klaterende waterval
+der rivier
+is je lach.
+
+Als de zoetheid der stilte
+in 't woud
+zijn je kussen.</pre>        </div>
+        <div class="poem" id="Piano">
+<h1>Piano.
+</h1>
+<pre class="poem-text">Speelt gij Bach?
+
+Speelt gij Bach?
+
+Speelt gij Bach
+                of Mozart ?
+
+Speelt gij Mozart, Grieg of 
+Beethoven?
+
+Speelt gij…
+Of wordt gij bespeeld?
+
+Ik speel 
+          piano.
+
+Witte toetsen, zwarte toetsen, 
+Wit en zwart is grijs. 
+Grijze stof op gele toetsen 
+van 'n oude afgedankte piano. 
+
+Vergeelde toetsen. 
+Vermolmde piano. 
+Kreunt gij
+	       of speelt gij Bach?
+</pre>        </div>
+        <div class="poem" id="Kompositie">
+<h1>Kompositie.
+</h1>
+<pre class="poem-text">De muur is groen... Het is een groene muur.
+Als ik hem bekijk word ik groen van ergernis.
+De strijkplank is wit, omdat dit meer etikette geeft
+als 't meisje strijkt in witte schort...
+of de vrijgezel, de mouwen opgerold,
+het witte laken van de strijkplank met druppels zweet bevuilt...
+of de moeder die huilt
+omdat ze de bruidsrok van haar oudste dochter schroeide,
+net toen de melkboer belde,
+die op zijn beurt het nieuws in de hele buurt vertelde;
+zodat nu witte strijkplank staat tegen groene muur
+- de rok ging naar de wasserij -
+waartegen ik mijn ergernis zit uit te schreeuwen.
+
+</pre>        </div>
+        <div class="poem" id="Uit">
+<h1>Uit.
+</h1>
+<pre class="poem-text">Uit 
+en weg is de liefde.
+Ik ben het zelf
+maar ik weet het niet.
+Ik doe het zelf
+maar ik weet het niet.
+Of is het enkel
+mijn hand
+die het doet?
+Haar hals is zacht
+maar ik voel het niet.
+Haar huid is warm
+maar het doet me niets.
+Een hand die klauwt
+om zich nog vast te klampen
+aan het leven.
+Ik voel nog even
+de strakgespannen snaren beven,
+dan dooft het,
+flikkert nog even,
+dan is het 
+Uit.</pre>        </div>
+        <div class="poem" id="Ouverture">
+<h1>Ouverture.
+</h1>
+<pre class="poem-text">Met een blik als kristal
+uit je reeënogen,
+met een kus als wijn
+van je rozenmond,
+met een streling als wind
+van je snarenvingers,
+bekoorde je me
+reeds vanaf d'eerste stond.
+En ik heb je gekust
+en ik heb je bekeken
+en je hand heeft in de mijne gerust.
+En ik heb je gestreeld
+en het is gebleken
+dat jij ook mijn kussen lust.
+Je blik bewaar ik in mijn ziel
+als een kristallen flonkering,
+je kus bewaar ik op mijn mond
+als een rode schittering
+en je streling houd ik in mijn hart
+als een nietgehoorde tokkeling.
+Je kus, je streling en je blik,
+tesaam met heel je wezen,
+doen me vergeten waar ik ben,
+doen me alles, alles vergeten.</pre>        </div>
+        <div class="poem" id="IkWilWachten">
+<h1>Ik wil wachten...
+</h1>
+<pre class="poem-text">Ik wil wachten, wachten wil ik.
+Naakt zoals Adam, eva wachtte.
+Naakt ontdaan van alles;
+en ongehinderd wachten op haar,
+die komt in de naam van de Moeder,
+naakt, ongerept als Eva.
+Kan ik wachten?
+Ik wil wachten
+Tot zij komt, verlossend mij
+van de gedachte
+dat ik wachtte tevergeefs.
+Wachten, wachten, niet om
+mijn leven te versmachten.
+Maar wachten, één ogenblik,
+op haar die ik betracht.
+Eén ogenblik duurt lang als men wacht.
+Ik wacht nog steeds...</pre>        </div>
+        <div class="poem" id="Beestachtigheden">
+<h1>Beestachtigheden
+</h1>
+<pre class="poem-text">Mijn zuster speelt piano, 
+De hond slaapt, 
+Op de piano ligt de kat, 
+Zij slaat de maat met haar staart. 
+Ik speel 
+        viool.
+De kat slaat de maat
+                     niet meer.
+Ze vecht met de hond.
+De hond gromt, de kat klauwt.
+De piano zwijgt.    De viool snerpt.
+De kat wordt gek, de hond wordt razend.
+BANG...
+        een schot? 	Een vioolsnaar
+heeft het begeven.
+De hond is dood. 	Ik ween.
+M'n zuster speelt
+			                Chopin.
+De kat sterft.
+Ik hang me op
+              aan een vioolsnaar.
+M’n zuster speelt
+                   “Lang zal hij leven”.</pre>        </div>
+        <div class="poem" id="Illuzie">
+<h1>Illuzie.
+</h1>
+<pre class="poem-text">Je hebt mijn hart
+verward
+zodat het sneller kloppen ging.
+Je hebt me met één woord
+bekoord
+zodat een vreemde siddering
+me beving.
+Je bent zo agressief,
+lief
+en toch zo onbegrijpelijk.
+Je bent charmant,
+galant,
+zodat je mijn ziel beroerde,
+me vervoerde.
+
+</pre>        </div>
+        <div class="poem" id="Eenzaamheid">
+<h1>Eenzaamheid.
+</h1>
+<pre class="poem-text">Ik wou dat de tram steeds 
+verder rijden zou, 
+steeds verder; 
+Ver, ver weg van jou. 
+Dat mijn hart, 
+in bloedende smart 
+uiteengerukt, 
+steeds verder, 
+verder, verder 
+van jou, 
+zou sterven 
+in eenzaamheid, 
+want ‘k hou van jou, 
+ontzettend veel van jou.
+</pre>        </div>
+        <div class="poem" id="Amor">
+<h1>Amor.
+</h1>
+<pre class="poem-text">d'Avond is eenzaam,
+Wanneer jij me, eenzaam,
+Alleen hebt gelaten
+En ik met moede stappen dwaal
+Langsheen de straten
+En, eenzaam, door de tranen staar
+Die plots het uitzicht mij belemmeren.
+Dan pas begrijp ik hoeveel ik van je hou
+En kijk in gedachten verzonken
+Naar de ster
+Waarvan ik weet dat ze beschermend
+Op je neerblikt, en ons,
+Al zijt ge ver,
+Toch nauw tesamen brengt.
+
+Eenzaam is d'avond
+En eenzaam zijn de straten,
+Doch nu ik venus' ster me na weet,
+Weet ik dat je me nimmer zult verlaten.</pre>        </div>
+        <div class="poem" id="Franse les">
+<h1>Franse Les.
+</h1>
+<pre class="poem-text">De les van Frans
+is zonder zwans
+één van de plezantste.
+"Ons Moeke" is 
+waar en gewis
+één van d'interessantsten.
+
+Nous voulons dans la nuit
+mais nous faisons du bruit
+comme les moteurs d'une machine.
+"Madame" dit: "Taissez-vous"
+mais nous bavardons tous
+et elle donne la pipe à Martine.
+
+Nu slapen er al
+en men hoort overal
+het snurken en gapen der koppen.
+Eén let er op
+krijgt een klop op z'n kop
+d'anderen schieten met proppen.
+
+</pre>        </div>
+        <div class="poem" id="Venus">
+<h1>Venus
+</h1>
+<pre class="poem-text">Zo oneindig ver
+en toch zo eind'loos dicht
+bij mij
+zijt gij
+mijn ster
+die het duister pad
+- dat ik tastend tracht te volgen -
+belicht met al uw luister.
+Vanuit uw lijst
+kijkt ge me aan.
+Ik voel, wijl gij nu aan me denkt,
+mijn hart een beetje sneller slaan.
+Waarom voel ik dees plotseling' emotie?
+'k wil wenen van 'n eenzaamheid
+en toch tegelijk glimlachen want,
+'k voel je aanwezigheid
+wijl ik naar je foto staar.</pre>        </div>
+        <div class="poem" id="HetEksamen">
+<h1>﻿Het eksamen
+</h1>
+<pre class="poem-text">Het nadert, tergend langzaam, 
+het wrede onbekende, 
+het onverzadigbare beest, 
+dat alles wat het vindt, 
+vermorzelt en verslindt.
+
+Het slaat de klauwen uit, 
+we kunnen niet ontsnappen 
+aan ‘t woeste beest, 
+ik voel het reeds me happen.
+
+En dan... ja ‘t is reeds te laat,
+ik voel de hete adem
+als het de muil openslaat 
+om ons te verslaan.
+
+Het woeste beest, 
+dat eenieder vreest, 
+is het eksamen, 
+dat langzaam nadert, 
+dat tergend langzaam nadert.
+</pre>        </div>
+        <div class="poem" id="PetiteFleur">
+<h1>Petite Fleur
+</h1>
+<pre class="poem-text">Niets
+      en om mij heen is het stil.
+Ik hoor alleen
+	hetgeen 
+	ik horen wil.
+Ik hoor alleen 
+	een hart
+dat spreekt
+    breekt
+           en dan sterft.
+</pre>        </div>
+        <div class="poem" id="Visioen">
+<h1>Visioen.
+</h1>
+<pre class="poem-text">De nacht is leeg
+en leeg
+is de plaats
+benevens.
+Waar eens gelegen had,
+Waar nimmer meer
+zal liggen
+Iemand.
+
+De nacht is zwart
+en zwart 
+is voor mij het
+leven.
+Onder 't witte laken,
+met holle kaken
+ligt 
+Iemand.
+
+De nacht is weg
+en weg
+is het wazig
+droombeeld.
+Waar eens gelegen had,
+naast mij
+daar ligt nu
+Niemand.</pre>        </div>
+        <div class="poem" id="ComparaisonMacabre">
+<h1>Comparaison Macabre.
+</h1>
+<pre class="poem-text">'k Zag daarnet een dooie kat,
+'t Beest was overreden.
+Ze was geheel met bloed bespat
+En finaal opengereten.
+'k Werd er plots verdrietig van;
+'k kon 't niet meer aanschouwen,
+Dat zo'n beest op zo'n manier
+Aan haar eind' moest komen.
+
+'k Zag daarnet een dooie kat,
+Door een dronkelap of wat
+Tegen het beton gereden.
+Wat gister nog jong en leven was,
+Behoort nu tot 't verleden.
+
+Haar zwarte pels heb ik gestreeld
+Wijl hete tranen drupten
+En zich mengden met het bloed,
+Dat, gestolten en versteend,
+Tussen de kasseien kleefde.
+
+En plots zag ik mezelf daar
+Eenzaam en verlaten,
+In die doodse bomenlaan,
+Op d'enige plek verlicht door een lantarenpaal,
+Bespat met bloed,
+En helemaal uiteengereten...
+'k Heb het altijd wel geweten,
+Dat ik autovoerders haatte,
+Vooral dan als ze dronken zaten
+In hun "wagen", "slee" of "car";
+En dat ik veel van poezen hou,
+Vooral dan van ... verlaten.</pre>        </div>
+        <div class="poem" id="Race">
+<h1>Race.
+</h1>
+Sneller, sneller, 
+
+<pre class="poem-text">-honderd vijftig, honderd zestig-
+met een sportcar,
+Sneller sneller
+naar tweehonderd toe.
+
+Verder, verder, 
+-honderd vijftig, honderd zestig-
+van een meisje weg,
+Vlugger vlugger,
+naar tweehonderd,
+    naar die bomen daar,
+        naar het einde toe.
+</pre>        </div>
+        <div class="poem" id="Verliefdheid">
+<h1>Verliefdheid.
+</h1>
+<pre class="poem-text">Gisteren was ik verliefd,
+Vandaag ben ik het nog,
+Eén blik, één glimlach en één kus,
+daarna een tramrit, een autobus,
+een wandeling en wéér een kus,
+een pijl van Amor aangesnord,
+twee harten sneller kloppen nog.
+Terwijl de regen gutst
+over twee verliefde aangzichten
+van twee jonge mensen
+die voor de liefde zwichten.
+
+</pre>        </div>
+</div>
+
+
+</body>
+</html>
