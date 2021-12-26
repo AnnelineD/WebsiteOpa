@@ -4,7 +4,7 @@ from jinja2 import Environment, FileSystemLoader
 
 
 class Generator:
-    def __init__(self, poems_dir="poems", templates_dir="templates", out_dir="out"):
+    def __init__(self, poems_dir="poems", templates_dir="templates", out_dir="docs"):
         self.poems = [os.path.basename(path).replace('.txt', '') for path in glob(f"{poems_dir}/*.txt")]
         self.titles = []
         self.poems_dir = poems_dir
@@ -13,7 +13,7 @@ class Generator:
         self.env = Environment(loader=FileSystemLoader([out_dir, templates_dir]),
                                autoescape=False, trim_blocks=True, lstrip_blocks=True)
 
-    def generate(self, out_dir='out'):
+    def generate(self, out_dir='docs'):
         base = self.env.get_template("base.html")
         with open(f"{out_dir}/index.html", 'w') as f:
             f.write(base.render(poems=[[f"{poem}.html", poem] for poem in self.poems],
