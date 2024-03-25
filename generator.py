@@ -1,17 +1,22 @@
 import os
+import re
 from glob import glob
 from jinja2 import Environment, FileSystemLoader
 
 
 class Generator:
     def __init__(self, poems_dir="poems", templates_dir="templates", out_dir="docs"):
-        self.poems = [os.path.basename(path).replace('.txt', '') for path in glob(f"{poems_dir}/*.txt")]
+        self.poems = sorted([os.path.basename(path).replace('.txt', '') for path in glob(f"{poems_dir}/*.txt")], key=self.natural_keys)
         self.titles = []
         self.poems_dir = poems_dir
         self.out_dir = out_dir
         print(self.poems)
         self.env = Environment(loader=FileSystemLoader([out_dir, templates_dir]),
                                autoescape=False, trim_blocks=True, lstrip_blocks=True)
+
+    @staticmethod
+    def natural_keys(text):
+        return [int(c) if c.isdigit() else c for c in re.split(r'(\d+)', text)]
 
     def generate(self, out_dir='docs'):
         base = self.env.get_template("base.html")
